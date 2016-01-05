@@ -1,11 +1,3 @@
-//
-//  Touchable.hpp
-//  angel
-//
-//  Created by Atsushi Yoshida on 2015/12/20.
-//
-//
-
 #ifndef Touchable_hpp
 #define Touchable_hpp
 

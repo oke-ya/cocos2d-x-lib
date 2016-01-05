@@ -1,13 +1,4 @@
-//
-//  Touchable.cpp
-//  angel
-//
-//  Created by Atsushi Yoshida on 2015/12/20.
-//
-//
-
 #include "Touchable.h"
-
 
 const std::string Touchable::LONG_TOUCH_KEY = "longTouch";
 const float Touchable::LONG_TOUCH_SEC = 1.0f;
