@@ -19,14 +19,14 @@ public:
     const int getMin() const;
     const int getHour() const;
     const int getDay() const;
-    const int daySec() const;
-    const int hourSec() const;
-    const int minSec() const;
     inline void setFinishCallback(const std::function<void(void)> fn){ _finishCallback = fn; }
 protected:
     Node* _node;
     std::function<void(void)> _finishCallback;
 private:
+    const int daySec() const;
+    const int hourSec() const;
+    const int minSec() const;
     inline const std::string getName(){ return _node->getName() + "alerm"; };
     int _remainingSec;
     float _dt;
