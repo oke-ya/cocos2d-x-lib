@@ -2,7 +2,7 @@
 
 const std::string Touchable::LONG_TOUCH_KEY = "longTouch";
 const float Touchable::LONG_TOUCH_SEC = 1.0f;
-void Touchable::onLongTouch(Widget* widget, const std::function<void(Ref* ref)>& action)
+void Touchable::onLongTouch(Widget* widget, const Callback& action)
 {
     widget->setTouchEnabled(true);
     widget->addTouchEventListener([&, action](Ref* ref, Widget::TouchEventType eventType){
@@ -24,7 +24,7 @@ void Touchable::onLongTouch(Widget* widget, const std::function<void(Ref* ref)>&
     });
 }
 
-void Touchable::onTouch(Widget* widget,  const std::function<void(Ref* ref)>& action)
+void Touchable::onTouch(Widget* widget,  const Callback& action)
 {
     widget->setTouchEnabled(true);
     widget->addTouchEventListener([widget, action](Ref* ref, Widget::TouchEventType eventType){

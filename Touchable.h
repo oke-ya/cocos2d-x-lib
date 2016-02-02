@@ -10,6 +10,7 @@ using namespace cocos2d::ui;
 class Touchable
 {
 protected:
+    typedef std::function<void(Ref* ref)> Callback;
     static const std::string LONG_TOUCH_KEY;
     static const float LONG_TOUCH_SEC;
     Touchable()
@@ -21,11 +22,12 @@ protected:
     {
     }
     
-    void onLongTouch(Widget* widget, const std::function<void(Ref* ref)>& action);
-    void onTouch(Widget* widget,  const std::function<void(Ref* ref)>& action);
+    void onLongTouch(Widget* widget, const Callback& action);
+    void onTouch(Widget* widget,  const Callback& action);
     void useTouchMaker(Node* node);
 private:
+
     float _dt;
 };
 
-#endif /* Touchable_hpp */
+#endif /* Touchable_h */
