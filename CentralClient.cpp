@@ -284,7 +284,7 @@ void CentralClient::downloadAssets(const std::function<void(EventAssetsManagerEx
     ss << ".manifest";
     
 #if TARGET_IPHONE_SIMULATOR
-#elif #elif COCOS2D_DEBUG
+#elif COCOS2D_DEBUG
     ss << ".stg";
 #else
     ss << ".prod";
