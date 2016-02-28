@@ -28,9 +28,15 @@ public:
     void postPlayLog(const std::string& data);
     inline int getCurrentCharge() const { return _currentCharge; }
     inline void setCurrentCharge(const int i){ _currentCharge = i; }
-    void backup(const std::string& fullPath, const std::string& fpath);
+    void backup();
     inline const std::string getUserToken(){ return _userToken; }
     void downloadAssets(const std::function<void(EventAssetsManagerEx* event)>& callback);
+    void savePlayData(ValueMap& dict);
+    const ValueMap loadPlayData();
+    
+    inline const std::string getBackupFilePath(){
+        return FileUtils::getInstance()->getWritablePath() + "/backup.plist";
+    }
 private:
     inline const std::string getAssetDir(){ return FileUtils::getInstance()->getWritablePath() + "/Reources"; }
     void addSpriteCaches();

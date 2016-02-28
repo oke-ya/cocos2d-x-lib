@@ -23,7 +23,6 @@ const std::string CentralClient::API_URL = "http://192.168.0.2:3000";
 //const std::string CentralClient::API_URL = "http://yalab.example.com:3000";
 
 
-
 const char* PAYMENT_USER_TOKEN = "paymentUserToken";
 const int CentralClient::ChargeNone = -1;
 const int CentralClient::INVALID_ITEM_BOUGHT = -1;
@@ -207,11 +206,12 @@ void CentralClient::postPlayLog(const std::string& data)
     RestClient::getInstance()->post("/play_logs", postData, [](HttpClient* client, HttpResponse* response){});
 }
 
-void CentralClient::backup(const std::string& fullPath, const std::string& fpath)
+void CentralClient::backup()
 {
-    const std::string token = getUserToken();
+    auto token = getUserToken();
+    const std::string fpath =  token.substr(0, 3) + "/" + token + ".plist";
     auto futils = FileUtils::getInstance();
-    const auto data = futils->getStringFromFile(fullPath);;
+    const auto data = futils->getStringFromFile(getBackupFilePath());;
     const auto sha256 = SHA256Hash(data);;
     RestClient::PostData postData;
     postData["hashed_payload"] = sha256;
@@ -335,4 +335,14 @@ void CentralClient::addSpriteCaches()
         closedir(dir);
     }
 
+}
+
+void CentralClient::savePlayData(ValueMap& dict)
+{
+    FileUtils::getInstance()->writeToFile(dict, getBackupFilePath());
+}
+
+const ValueMap CentralClient::loadPlayData()
+{
+    return FileUtils::getInstance()->getValueMapFromFile(getBackupFilePath());
 }
