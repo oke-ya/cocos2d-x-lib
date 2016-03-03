@@ -17,7 +17,7 @@ class CentralClient
 {
 public:
     CentralClient();
-    static const std::string API_URL;
+    static const std::string CENTRAL_API_URL;
     static const int ChargeNone;
     static const int INVALID_ITEM_BOUGHT;
     static CentralClient* getInstance();

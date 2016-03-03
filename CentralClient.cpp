@@ -13,14 +13,14 @@
 
 
 #if TARGET_IPHONE_SIMULATOR
-    const std::string CentralClient::API_URL = "http://localhost:3000";
+    const std::string CentralClient::CENTRAL_API_URL = "http://localhost:3000";
 #elif COCOS2D_DEBUG
-//    const std::string CentralClient::API_URL = "https://ocentral-api-stg.herokuapp.com/";
-const std::string CentralClient::API_URL = "http://192.168.0.2:3000";
+//    const std::string CentralClient::CENTRAL_API_URL = "https://ocentral-api-stg.herokuapp.com/";
+const std::string CentralClient::CENTRAL_API_URL = "http://192.168.0.2:3000";
 #else
-    const std::string CentralClient::API_URL = "https://ocentral-api.herokuapp.com/";
+    const std::string CentralClient::CENTRAL_API_URL = "https://ocentral-api.herokuapp.com/";
 #endif
-//const std::string CentralClient::API_URL = "http://yalab.example.com:3000";
+//const std::string CentralClient::CENTRAL_API_URL = "http://yalab.example.com:3000";
 
 
 const char* PAYMENT_USER_TOKEN = "paymentUserToken";
@@ -104,7 +104,7 @@ void CentralClient::buyCharge(const int price, ProtocolIAP::ProtocolIAPCallback 
     postData["token"] = userToken;
     postData["price"] = std::to_string(price);
 
-    RestClient::getInstance()->post(API_URL + "/payments",  postData, [&, callback, info](HttpClient* client, HttpResponse* response){
+    RestClient::getInstance()->post(CENTRAL_API_URL + "/payments",  postData, [&, callback, info](HttpClient* client, HttpResponse* response){
         if(response->isSucceed()){
             auto v = *response->getResponseData();
             const std::string paymentId(v.begin(), v.end());
@@ -132,7 +132,7 @@ void CentralClient::createUser()
 {
     RestClient::PostData postData;
     postData["game_id"] = GAME_ID;
-    RestClient::getInstance()->post(API_URL + "/players", postData, [&](HttpClient* client, HttpResponse* response){
+    RestClient::getInstance()->post(CENTRAL_API_URL + "/players", postData, [&](HttpClient* client, HttpResponse* response){
         if(response->isSucceed()){
             auto v = *response->getResponseData();
             const std::string body(v.begin(), v.end());
@@ -149,13 +149,13 @@ void CentralClient::paymentSuccess(const std::string& paymentId, ProtocolIAP::Pr
     RestClient::PostData postData;
     postData["receipt_data"] = msg;
     postData["token"] = getUserToken();
-    auto url = API_URL + "/payments/" + paymentId;
+    auto url = CENTRAL_API_URL + "/payments/" + paymentId;
     RestClient::getInstance()->put(url, postData, wrapCallback(callback));
 }
 
 void CentralClient::getCurrentCharge(ProtocolIAP::ProtocolIAPCallback callback)
 {
-    RestClient::getInstance()->get(API_URL + "/payments?token=" + getUserToken(), [&, callback](HttpClient* client, HttpResponse* response){
+    RestClient::getInstance()->get(CENTRAL_API_URL + "/payments?token=" + getUserToken(), [&, callback](HttpClient* client, HttpResponse* response){
         auto status = response->getResponseCode();
         auto v = *response->getResponseData();
         std::string msg(v.begin(), v.end());
@@ -217,7 +217,7 @@ void CentralClient::backup()
     postData["hashed_payload"] = sha256;
     postData["method"] = "PUT";
     postData["filename"] = fpath;
-    const std::string url = API_URL + "/players/" + token + "/s3_header";
+    const std::string url = CENTRAL_API_URL + "/players/" + token + "/s3_header";
     RestClient::getInstance()->post(url, postData, [&, data, fpath](HttpClient* client, HttpResponse* response){
         if(response->getResponseCode() != 200){
             return;
