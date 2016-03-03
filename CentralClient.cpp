@@ -403,6 +403,9 @@ const std::string CentralClient::valueToStr(Value& value)
             return ss.str();
             break;
         }
+        case Value::Type::NONE :{
+            return "null";
+        }
         default: {
             log("Not defined print type");
         }
