@@ -346,3 +346,67 @@ const ValueMap CentralClient::loadPlayData()
 {
     return FileUtils::getInstance()->getValueMapFromFile(getBackupFilePath());
 }
+
+void CentralClient::printValueMap(cocos2d::ValueMap& vmap)
+{
+    auto v = Value(vmap);
+    log("%s", valueToStr(v).c_str());
+}
+
+const std::string CentralClient::valueToStr(Value& value)
+{
+    std::stringstream ss;
+    switch(value.getType()){
+        case Value::Type::MAP :{
+            ss << "{";
+            auto& vmap = value.asValueMap();
+            auto size = vmap.size();
+            int i = 0;
+            for(auto& v: vmap){
+                ss << "\"" + v.first + "\"";
+                ss << ": ";
+                ss << valueToStr(v.second);
+                i++;
+                if(i < size){
+                    ss << ", ";
+                }
+            }
+            ss << "}";
+            return ss.str();
+            break;
+        }
+        case Value::Type::VECTOR :{
+            ss << "[";
+            auto& vec = value.asValueVector();
+            auto size = vec.size();
+            int i = 0;
+            for(auto& v: vec){
+                ss << valueToStr(v);
+                i++;
+                if(i < size){
+                    ss << ", ";
+                }
+            }
+            ss << "]";
+            return ss.str();
+            break;
+        }
+        case Value::Type::INTEGER :{
+            ss << value.asInt();
+            return ss.str();
+            break;
+        }
+        case Value::Type::STRING :{
+            ss << "\"";
+            ss << value.asString();
+            ss << "\"";
+            return ss.str();
+            break;
+        }
+        default: {
+            log("Not defined print type");
+        }
+    }
+
+}
+
