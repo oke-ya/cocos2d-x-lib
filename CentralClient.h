@@ -38,10 +38,10 @@ public:
         return FileUtils::getInstance()->getWritablePath() + "/backup.plist";
     }
     void printValueMap(cocos2d::ValueMap& vmap);
+    void addSpriteCaches(const std::string prefix="");
 private:
     const std::string valueToStr(Value& value);
     inline const std::string getAssetDir(){ return FileUtils::getInstance()->getWritablePath() + "/Reources"; }
-    void addSpriteCaches();
     void putToS3(const std::string& fpath, const std::string& data, const std::string& header);
     ccHttpRequestCallback wrapCallback(ProtocolIAP::ProtocolIAPCallback& callback);
     inline void setUserToken(const std::string& userToken){ _userToken = userToken; }

@@ -284,6 +284,7 @@ void CentralClient::downloadAssets(const std::function<void(EventAssetsManagerEx
     ss << ".manifest";
     
 #if TARGET_IPHONE_SIMULATOR
+    ss << ".dev";
 #elif COCOS2D_DEBUG
     ss << ".stg";
 #else
@@ -313,7 +314,7 @@ void CentralClient::downloadAssets(const std::function<void(EventAssetsManagerEx
 }
 
 #include <dirent.h>
-void CentralClient::addSpriteCaches()
+void CentralClient::addSpriteCaches(const std::string prefix)
 {
     auto assetDir = getAssetDir();
     std::string cacheExt = ".plist";
@@ -330,7 +331,10 @@ void CentralClient::addSpriteCaches()
             if(extname != cacheExt){
                 continue;
             }
-            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plist);
+            if(prefix.size() > 0 && plist.substr(0, prefix.size()) != prefix){
+                continue;
+            }
+            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(assetDir + "/" + plist);
         }
         closedir(dir);
     }
