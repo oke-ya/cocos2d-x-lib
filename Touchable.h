@@ -3,11 +3,12 @@
 
 #include "cocos2d.h"
 #include "CocosGUI.h"
+#include "NonCopyable.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;
 
-class Touchable
+class Touchable : NonCopyable<Touchable>
 {
 protected:
     typedef std::function<void(Ref* ref)> Callback;
