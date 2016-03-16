@@ -4,6 +4,7 @@
 #include "EnvPrivate.h"
 #include "RestClient.h"
 #include "cocos/base/CCUserDefault.h"
+#include "cocos/2d/CCSpriteFrameCache.h"
 #include <openssl/sha.h>
 #include <iomanip>
 #include <sstream>
