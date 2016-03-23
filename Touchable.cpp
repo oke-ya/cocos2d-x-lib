@@ -34,6 +34,23 @@ void Touchable::onTouch(Widget* widget,  const Callback& action)
     });
 }
 
+void Touchable::disableTouch(Layer* layer)
+{
+    auto disable = Layout::create();
+    disable->setTouchEnabled(true);
+    disable->setContentSize(Director::getInstance()->getWinSize());
+    disable->addTouchEventListener([](Ref* ref,Widget::TouchEventType eventType){
+        log("disable touch");
+    });
+    disable->setName(DISABLE_TOUCH_LAYER);
+    layer->addChild(disable);
+}
+
+void Touchable::enableTouch(Layer* layer)
+{
+    layer->getChildByName(DISABLE_TOUCH_LAYER)->removeFromParent();
+}
+
 void Touchable::useTouchMaker(Node* node)
 {
     auto listener = EventListenerTouchOneByOne::create();
