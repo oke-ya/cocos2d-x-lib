@@ -48,7 +48,9 @@ void Touchable::disableTouch(Layer* layer)
 
 void Touchable::enableTouch(Layer* layer)
 {
-    layer->getChildByName(DISABLE_TOUCH_LAYER)->removeFromParent();
+    while(auto disable = layer->getChildByName(DISABLE_TOUCH_LAYER)){
+        disable->removeFromParent();
+    }
 }
 
 void Touchable::useTouchMaker(Node* node)
