@@ -27,7 +27,7 @@ public:
     }
     
 protected:
-    Node* _csb;
+    Node* _csb{ nullptr };
     inline Node* getCsb() const { return _csb; }
     
     static T* create()
@@ -48,14 +48,17 @@ protected:
     
     bool setCsb(){
         const auto numPrefix = std::regex("^[0-9]+");
-        auto basename = std::string(typeid(T).name());
-        auto name = std::regex_replace( basename, numPrefix, "") ;
+        const auto basename = std::string(typeid(T).name());
+        const auto name = std::regex_replace( basename, numPrefix, "") ;
         std::stringstream ss;
         ss << "Csbs/";
         ss << name;
         ss << ".csb";
-        _csb = CSLoader::createNode(ss.str());
-        this->addChild(_csb);
+        const auto fname = ss.str();
+        if(FileUtils::getInstance()->isFileExist(fname)){
+            _csb = CSLoader::createNode(fname);
+            this->addChild(_csb);
+        }
         useTouchMaker(this);
         return true;
     }
