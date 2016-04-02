@@ -10,10 +10,10 @@ using namespace cocos2d::ui;
 using namespace spine;
 
 namespace supportfunctions{
-    static inline const Vec2&& middleCenter()
+    static inline const Vec2 middleCenter()
     {
         auto winSize = Director::getInstance()->getWinSize();
-        return std::forward<Vec2>(Vec2(winSize.width / 2, winSize.height / 2));
+        return Vec2(winSize.width / 2, winSize.height / 2);
     }
 
     static inline SkeletonAnimation* createSpineAnimation(const std::string& fname)
