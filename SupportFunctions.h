@@ -9,7 +9,7 @@ using namespace cocos2d;
 using namespace cocos2d::ui;
 using namespace spine;
 
-namespace suppoortfunctions{
+namespace supportfunctions{
     static inline const Vec2&& middleCenter()
     {
         auto winSize = Director::getInstance()->getWinSize();
