@@ -10,12 +10,36 @@ using namespace cocos2d::ui;
 using namespace spine;
 
 namespace supportfunctions{
+    static inline const Vec2 topCenter()
+    {
+        auto pos = Director::getInstance()->getVisibleOrigin();
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        return Vec2(pos.x + visibleSize.width / 2, pos.y + visibleSize.height);
+    }
     static inline const Vec2 middleCenter()
     {
         auto winSize = Director::getInstance()->getWinSize();
         return Vec2(winSize.width / 2, winSize.height / 2);
     }
-
+    static inline const Vec2 bottomCenter()
+    {
+        auto pos = Director::getInstance()->getVisibleOrigin();
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        return Vec2(pos.x + visibleSize.width / 2, pos.y);
+    }
+    static inline const Vec2 topLeft()
+    {
+        auto pos = Director::getInstance()->getVisibleOrigin();
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        return Vec2(pos.x, pos.y + visibleSize.height);
+    }
+    static inline const Vec2 bottomLeft()
+    {
+        auto pos = Director::getInstance()->getVisibleOrigin();
+        return Vec2(pos.x / 2, pos.y);
+    }
+    
+    
     static inline SkeletonAnimation* createSpineAnimation(const std::string& fname)
     {
         return SkeletonAnimation::createWithFile("Animations/" + fname + ".json", "Animations/" + fname + ".atlas");
