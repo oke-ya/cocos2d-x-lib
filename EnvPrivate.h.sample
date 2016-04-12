@@ -1,0 +1,13 @@
+#ifndef __okeya__EnvPrivate_h
+#define __okeya__EnvPrivate_h
+
+#include <string>
+#include <unordered_map>
+
+#ifdef __APPLE__
+#include "TargetConditionals.h"
+#endif
+
+static const std::string GOOGLE_APPKEY = "";
+
+#endif //__okeya__EnvPrivate_h
