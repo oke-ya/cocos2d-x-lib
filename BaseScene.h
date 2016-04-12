@@ -17,7 +17,7 @@ template <typename T>
 class BaseScene : public Layer, protected Touchable
 {
 public:
-    virtual ~BaseScene(){}
+    virtual ~BaseScene() = default;
     static cocos2d::Scene* createScene()
     {
         auto scene = Scene::create();
@@ -63,6 +63,21 @@ protected:
         return true;
     }
 };
+
+template <typename T>
+class PhysicsBaseScene : public BaseScene<T>
+{
+public:
+    virtual ~PhysicsBaseScene() = default;
+    static cocos2d::Scene* createScene()
+    {
+        auto scene = Scene::createWithPhysics();
+        auto layer = T::create();
+        scene->addChild(layer);
+        return scene;
+    }
+};
+
 
 
 #endif /* defined(__okeya__BaseScene__) */
