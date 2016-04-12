@@ -47,9 +47,15 @@ protected:
     }
     
     bool setCsb(){
-        const auto numPrefix = std::regex("^[0-9]+");
+        const auto numPrefix = std::regex("^.*[0-9]+");
         const auto basename = std::string(typeid(T).name());
-        const auto name = std::regex_replace( basename, numPrefix, "") ;
+        const auto classname = std::regex_replace( basename, numPrefix, "") ;
+        std::string name;
+        if(basename.substr(0, 1) ==  "N"){
+            name = classname.substr(0, classname.size() - 1);
+        }else{
+            name = classname;
+        }
         std::stringstream ss;
         ss << "Csbs/";
         ss << name;
