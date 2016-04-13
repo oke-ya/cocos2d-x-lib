@@ -4,14 +4,13 @@
 template <class T>
 class NonCopyable
 {
-protected:
-    NonCopyable () {}
-    ~NonCopyable () {}
-private:
-    NonCopyable (const NonCopyable &);
-    NonCopyable(const NonCopyable &&);
-    T & operator = (const T &);
-    T& operator =(T&&);
+public:
+    NonCopyable () = default;
+    virtual ~NonCopyable () = default;
+    NonCopyable (const NonCopyable &) = delete;
+    NonCopyable(const NonCopyable &&) = delete;
+    T& operator=(const T &) = delete;
+    T& operator=(const T&&) = delete;
 };
 
 #endif /* defined(__central__NonCopyable__) */
