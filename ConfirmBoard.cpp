@@ -18,7 +18,7 @@ using namespace cocos2d::experimental;
 
 void ConfirmBoard::init()
 {
-    _board = CSLoader::createNode("Csbs/Common/ConfirmBoard.csb");
+    _board = CSLoader::createNode("Csbs/ConfirmBoard.csb");
     _board->setPosition(supportfunctions::bottomLeft());
     _world->addChild(_board);
 }

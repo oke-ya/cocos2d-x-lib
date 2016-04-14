@@ -14,7 +14,6 @@
 
 using namespace cocos2d;
 
-
 class ConfirmBoard : public PopUp
 {
 public:
