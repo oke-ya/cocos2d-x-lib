@@ -3,7 +3,6 @@
 
 #include "cocos2d.h"
 #include "Touchable.h"
-#include "CommonTypes.h"
 
 using namespace cocos2d;
 
@@ -36,9 +35,18 @@ public:
             auto node = tmpl->clone();
             callback(node, dataId, datas.at(dataId));
             auto confirm = node->getChildByName<ImageView*>("BgImage");
-            onTouch(confirm, [&, dataId](Ref* ref){
-                _onPressConfirm(static_cast<int>(dataId));
-            });
+            if (confirm) {
+                onTouch(confirm, [&, dataId](Ref* ref){
+                    _onPressConfirm(static_cast<int>(dataId));
+                });
+            }
+            auto detail = node->getChildByName<Button*>("Detail");
+            if (detail) {
+                detail->setLocalZOrder(confirm->getLocalZOrder() + 2);
+                onTouch(detail, [&, dataId](Ref* ref){
+                    _onPressDetail(static_cast<int>(dataId));
+                });
+            }
             setList(node);
         }
         refreshList();

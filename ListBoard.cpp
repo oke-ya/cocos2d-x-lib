@@ -10,7 +10,7 @@ using namespace cocos2d::experimental;
 void ListBoard::init()
 {
     _board = CSLoader::createNode("Csbs/ListBoard.csb");
-    _board->setPosition(supportfunctions::bottomLeft());
+    _board->setPosition(supportfunctions::middleCenter());
     _world->addChild(_board);
     hide();
 }
@@ -49,7 +49,7 @@ void ListBoard::onClose(const Touchable::Callback& callback)
 
 void ListBoard::onButtonPress(const std::string& name, const Touchable::Callback& callback)
 {
-    auto button = _board->getChildByName(name)->getChildByName<Button*>("Button");
+    auto button = _board->getChildByName<Button*>(name);
     onTouch(button, [&, callback](Ref* ref){
         callback(ref);
         hide();

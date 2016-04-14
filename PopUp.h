@@ -28,7 +28,7 @@ protected:
     using Callback = std::function<void(const int)>;
     void onButtonPress(const std::string& name, const Touchable::Callback& callback)
     {
-        auto button = _board->getChildByName(name)->getChildByName<Button*>("Button");
+        auto button = _board->getChildByName<Button*>(name);
         onTouch(button, [&, callback](Ref* ref){
             callback(ref);
             hide();

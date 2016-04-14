@@ -11,7 +11,7 @@ void PageBoard::init()
 {
     _board = CSLoader::createNode("Csbs/PageBoard.csb");
     _pageView = _board->getChildByName<PageView*>("PageView");
-    _board->setPosition(supportfunctions::bottomLeft());
+    _board->setPosition(supportfunctions::middleCenter());
     _world->addChild(_board);
     hide();
 }
@@ -46,7 +46,7 @@ void PageBoard::setPager()
     pageView->setCurrentPageIndex(pageView->getItems().size() - 1);
     pageView->scrollToItem(0);
     renderPageNumber(pageView);
-    pageView->addEventListener([&](Ref* ref, ScrollView::EventType eventType){
+    static_cast<ListView*>(pageView)->addEventListener([&](Ref* ref, ScrollView::EventType eventType){
         if(eventType == ScrollView::EventType::CONTAINER_MOVED){
             renderPageNumber(static_cast<PageView*>(ref));
         }

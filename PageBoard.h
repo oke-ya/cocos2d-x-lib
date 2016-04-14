@@ -3,7 +3,6 @@
 
 #include "cocos2d.h"
 #include "Touchable.h"
-#include "CommonTypes.h"
 #include "PopUp.h"
 
 using namespace cocos2d;
@@ -38,14 +37,18 @@ public:
             callback(node, dataId, datas.at(dataId));
             page->addChild(node);
             auto confirm = node->getChildByName<ImageView*>("BgImage");
-            onTouch(confirm, [&, dataId](Ref* ref){
-                _onPressConfirm(static_cast<int>(dataId));
-            });
+            if (confirm) {
+                onTouch(confirm, [&, dataId](Ref* ref){
+                    _onPressConfirm(static_cast<int>(dataId));
+                });
+            }
             auto detail = node->getChildByName<Button*>("Detail");
-            detail->setLocalZOrder(confirm->getLocalZOrder() + 2);
-            onTouch(detail, [&, dataId](Ref* ref){
-                _onPressDetail(static_cast<int>(dataId));
-            });
+            if (detail) {
+                detail->setLocalZOrder(confirm->getLocalZOrder() + 2);
+                onTouch(detail, [&, dataId](Ref* ref){
+                    _onPressDetail(static_cast<int>(dataId));
+                });
+            }
             x++;
             if(x >= graphSize.x){
                 x = 0;
