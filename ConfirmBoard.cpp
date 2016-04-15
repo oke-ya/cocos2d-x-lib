@@ -7,7 +7,6 @@
 //
 
 #include "ConfirmBoard.h"
-#include "CommonTypes.h"
 #include "cocos/ui/CocosGUI.h"
 #include "editor-support/cocostudio/CocoStudio.h"
 #include "SupportFunctions.h"
