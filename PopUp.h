@@ -13,14 +13,7 @@ public:
     : _world(node)
     {
     }
-    virtual ~PopUp()
-    {
-        if(_board){
-            _board->removeFromParent();
-            _board = nullptr;
-        }
-        log("desturct PopUp");
-    }
+    virtual ~PopUp() = default;
     inline void hide(){ _board->setScale(0.0f); }
     inline void show(){ _board->setScale(1.0f); }
 protected:

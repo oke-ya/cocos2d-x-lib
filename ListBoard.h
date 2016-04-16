@@ -14,13 +14,7 @@ public:
     {
         init();
     }
-    virtual ~ListBoard(){
-        if(_board){
-            _board->removeFromParent();
-            _board = nullptr;
-        }
-        log("desturct ListBoard");
-    }
+    virtual ~ListBoard() = default;
     void setTitle(const std::string& title);
     void setList(Node* node);
     void onClose(const Touchable::Callback& callback);
