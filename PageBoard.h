@@ -15,6 +15,7 @@ public:
     {
         init();
     }
+    virtual ~PageBoard() = default;
     void setTitle(const std::string& title);
     void setPage(Layout* page);
     void onClose(const Touchable::Callback& callback);
@@ -72,8 +73,8 @@ public:
 private:
     inline PageView* getPageView() const { return _pageView; }
     void resetPage();
-    Callback _onPressConfirm;
-    Callback _onPressDetail;
+    Callback _onPressConfirm{ [](const int itemId){ log("Not implement onPressConfirm."); } };
+    Callback _onPressDetail{ [](const int itemId){ log("Not implement onPressDetail."); } };
     inline Widget* getBoxTemplate() const { return _boxTemplate; }
     inline Node* getWorld(){ return _world; }
     void renderPageNumber(PageView* pageView);
