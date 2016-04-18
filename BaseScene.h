@@ -25,9 +25,16 @@ public:
         scene->addChild(layer);
         return scene;
     }
-    
+    inline Node* getChildByName(const std::string& name)
+    {
+        return _csb->getChildByName(name);
+    }
+    template<typename NodePTR>
+    NodePTR getChildByName(const std::string& name)
+    {
+        return _csb->getChildByName<NodePTR>(name);
+    }
 protected:
-    Node* _csb{ nullptr };
     inline Node* getCsb() const { return _csb; }
     
     static T* create()
@@ -68,6 +75,8 @@ protected:
         useTouchMaker(this);
         return true;
     }
+private:
+    Node* _csb{ nullptr };
 };
 
 template <typename T>
