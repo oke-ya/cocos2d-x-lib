@@ -12,6 +12,7 @@ class PageBoard : public PopUp
 public:
     PageBoard(Node* node)
     : PopUp(node)
+    , _sctollToPage(0)
     {
         init();
     }
@@ -70,6 +71,7 @@ public:
     };
     void onPressConfirm(const Callback& callback){ _onPressConfirm = callback; }
     void onPressDetail(const Callback& callback){ _onPressDetail = callback; }
+    void setScrollToPage(const int scrollToPage);
 private:
     inline PageView* getPageView() const { return _pageView; }
     void resetPage();
@@ -82,6 +84,7 @@ private:
     void init();
     Widget* _boxTemplate{ nullptr };
     PageView* _pageView;
+    int _sctollToPage;
 };
 
 #endif /* defined(__okeya__PageBoard__) */
