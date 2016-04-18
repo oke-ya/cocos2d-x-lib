@@ -29,6 +29,7 @@ void ConfirmBoard::setString(const std::string& nodeName, const std::string& msg
     if(node){
         node->setString(msg);
     }
+    show();
 }
 
 void ConfirmBoard::setTitle(const std::string& title)
