@@ -38,7 +38,7 @@ public:
         return FileUtils::getInstance()->getWritablePath() + "/backup.plist";
     }
     void printValueMap(cocos2d::ValueMap& vmap);
-    void addSpriteCaches(const std::string prefix="");
+    void addSpriteCaches(Node* node, const std::string prefix="");
 private:
     const std::string valueToStr(Value& value);
     inline const std::string getAssetDir(){ return FileUtils::getInstance()->getWritablePath() + "/Reources"; }

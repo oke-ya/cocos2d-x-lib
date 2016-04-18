@@ -6,13 +6,13 @@
 #include "cocos/base/CCUserDefault.h"
 #include "cocos/2d/CCSpriteFrameCache.h"
 #include "cocos/base/CCDirector.h"
+#include "CocosGUI.h"
 #include <openssl/sha.h>
 #include <iomanip>
 #include <sstream>
 #ifdef __APPLE__
 #include "TargetConditionals.h"
 #endif
-
 
 #if TARGET_IPHONE_SIMULATOR
     const std::string CentralClient::CENTRAL_API_URL = "http://localhost:3000";
@@ -28,6 +28,8 @@ const std::string CentralClient::CENTRAL_API_URL = "http://192.168.0.2:3000";
 const char* PAYMENT_USER_TOKEN = "paymentUserToken";
 const int CentralClient::ChargeNone = -1;
 const int CentralClient::INVALID_ITEM_BOUGHT = -1;
+
+using namespace cocos2d::ui;
 
 CentralClient::CentralClient()
 : _init(false)
@@ -299,16 +301,6 @@ void CentralClient::downloadAssets(const std::function<void(EventAssetsManagerEx
     auto assetManager = AssetsManagerEx::create(manifest, destDir);
     assetManager->retain();
     auto eventListener = EventListenerAssetsManagerEx::create(assetManager, [=](EventAssetsManagerEx* event){
-        auto eventCode = event->getEventCode();
-        switch(eventCode){
-            case EventAssetsManagerEx::EventCode::ALREADY_UP_TO_DATE:
-            case EventAssetsManagerEx::EventCode::UPDATE_FINISHED: {
-                addSpriteCaches();
-            }
-            default:{
-            }
-        }
-
         callback(event);
     });
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(eventListener, 1);
@@ -316,8 +308,12 @@ void CentralClient::downloadAssets(const std::function<void(EventAssetsManagerEx
 }
 
 #include <dirent.h>
-void CentralClient::addSpriteCaches(const std::string prefix)
+void CentralClient::addSpriteCaches(Node* node, const std::string prefix)
 {
+    auto layer = Layer::create();
+    node->addChild(layer);
+    auto mask = LayerColor::create(Color4B::BLACK);
+    node->addChild(mask);
     auto assetDir = getAssetDir();
     std::string cacheExt = ".plist";
     struct dirent *ent;
@@ -336,11 +332,18 @@ void CentralClient::addSpriteCaches(const std::string prefix)
             if(prefix.size() > 0 && plist.substr(0, prefix.size()) != prefix){
                 continue;
             }
-            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(assetDir + "/" + plist);
+            auto plistPath = assetDir + "/" + plist;
+            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plistPath);
+            std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plistPath);
+            ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
+            auto& frames = dict["frames"].asValueMap();
+            for(auto itr = frames.cbegin(); itr != frames.cend(); itr++){
+                auto img = ImageView::create(itr->first, ImageView::TextureResType::PLIST);
+                layer->addChild(img);
+            }
         }
         closedir(dir);
     }
-
 }
 
 void CentralClient::savePlayData(ValueMap& dict)
