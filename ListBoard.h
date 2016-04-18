@@ -3,14 +3,15 @@
 
 #include "cocos2d.h"
 #include "Touchable.h"
+#include "PopUp.h"
 
 using namespace cocos2d;
 
-class ListBoard : private Touchable
+class ListBoard : public PopUp
 {
 public:
     ListBoard(Node* node)
-    : _world(node)
+    : PopUp(node)
     {
         init();
     }
@@ -49,20 +50,15 @@ public:
     using Callback = std::function<void(const int)>;
     void onPressConfirm(const Callback& callback){ _onPressConfirm = callback; }
     void onPressDetail(const Callback& callback){ _onPressDetail = callback; }
-    inline void hide(){ _board->setScale(0.0f); }
-    inline Node* getBoard(){ return _board; }
 private:
     void resetList();
     void refreshList();
-    inline void show(){ _board->setScale(1.0f); }
     Callback _onPressConfirm;
     Callback _onPressDetail;
     inline Widget* getBoxTemplate() const { return _boxTemplate; }
     void onButtonPress(const std::string& name, const Touchable::Callback& callback);
     inline Node* getWorld(){ return _world; }
     void init();
-    Node* _world;
-    Node* _board;
     Widget* _boxTemplate{ nullptr };
 };
 

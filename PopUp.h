@@ -14,8 +14,9 @@ public:
     {
     }
     virtual ~PopUp() = default;
-    inline void hide(){ _board->setScale(0.0f); }
-    inline void show(){ _board->setScale(1.0f); }
+    inline void hide(){ _board->setVisible(false); }
+    inline void show(){ _board->setVisible(true); }
+    inline Node* getBoard(){ return _board; }
 protected:
     inline Node* getWorld(){ return _world; }
     using Callback = std::function<void(const int)>;

@@ -72,6 +72,7 @@ public:
     void onPressConfirm(const Callback& callback){ _onPressConfirm = callback; }
     void onPressDetail(const Callback& callback){ _onPressDetail = callback; }
     void setScrollToPage(const int scrollToPage);
+    inline Node* getBoard(){ return _board; }
 private:
     inline PageView* getPageView() const { return _pageView; }
     void resetPage();
