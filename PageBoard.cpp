@@ -44,7 +44,7 @@ void PageBoard::setPager()
 {
     auto pageView = getPageView();
     pageView->setCurrentPageIndex(pageView->getItems().size() - 1);
-    pageView->scrollToItem(0);
+    pageView->scrollToItem(_sctollToPage);
     renderPageNumber(pageView);
     static_cast<ListView*>(pageView)->addEventListener([&](Ref* ref, ScrollView::EventType eventType){
         if(eventType == ScrollView::EventType::CONTAINER_MOVED){
@@ -60,6 +60,11 @@ void PageBoard::setPager()
     onTouch(next, [&, pageView](Ref* ref){
         pageView->scrollToItem(pageView->getCurrentPageIndex() + 1);
     });
+}
+
+void PageBoard::setScrollToPage(const int scrollToPage)
+{
+    _sctollToPage = scrollToPage;
 }
 
 void PageBoard::renderPageNumber(PageView* pageView)

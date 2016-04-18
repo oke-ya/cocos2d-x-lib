@@ -54,7 +54,9 @@ public:
     };
     using Callback = std::function<void(const int)>;
     void onPressConfirm(const Callback& callback){ _onPressConfirm = callback; }
+    void onPressDetail(const Callback& callback){ _onPressDetail = callback; }
     inline void hide(){ _board->setScale(0.0f); }
+    inline Node* getBoard(){ return _board; }
 private:
     void resetList();
     void refreshList();
