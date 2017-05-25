@@ -42,7 +42,7 @@ namespace supportfunctions{
     
     static inline SkeletonAnimation* createSpineAnimation(const std::string& fname)
     {
-        return SkeletonAnimation::createWithFile("Animations/" + fname + ".json", "Animations/" + fname + ".atlas");
+        return SkeletonAnimation::createWithJsonFile("Animations/" + fname + ".json", "Animations/" + fname + ".atlas");
     }
 
     static inline Button* createButton(const std::string& fname)
